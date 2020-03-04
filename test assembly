@@ -1,0 +1,35 @@
+main():
+push    rbp
+        mov     rbp, rsp
+        sub     rsp, 48
+        mov     DWORD PTR [rbp-4], 0 #for int i = 0
+.L1:
+        cmp     DWORD PTR [rbp-4], 9 #i<10
+        jg      .L2
+	in	eax, DWORD PTR [1000]	#input from keyboard
+        mov     DWORD PTR [rbp-48+rax*4], eax
+        mov     eax, DWORD PTR [rbp-4] 	#find_Max_and_Min(array, i + 1);
+        add     eax, 1			#i+1
+        mov     DWORD PTR [rbp-8], eax	
+        lea     rdx, [rbp-8]		#parameter 2
+        lea     rax, [rbp-48]		#parameter 1
+        mov     rsi, rdx
+        mov     rdi, rax
+        call    find_Max_and_Min(int*, int const&)
+        add     DWORD PTR [rbp-4], 1
+        jmp     .L1
+.L2:
+        mov     eax, 0	#
+        leave		# return 0
+        ret		#
+
+find_Max_and_Min(int*, int const&):
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 32
+        mov     QWORD PTR [rbp-24], rdi
+        mov     QWORD PTR [rbp-32], rsi
+        mov     DWORD PTR [rbp-8], 0
+        mov     DWORD PTR [rbp-12], 0
+
+#incomplete
